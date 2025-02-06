@@ -1,0 +1,16 @@
+{
+  "folders": [
+	{
+		"path": "../../../../Documents/redesain-bve"
+	},
+	{
+		"path": "../../../react-bve"
+	},
+	{
+		"path": "../.."
+	}
+],
+  "settings": {
+    "liveServer.settings.multiRootWorkspaceName": "react"
+  }
+}
