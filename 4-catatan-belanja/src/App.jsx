@@ -22,11 +22,33 @@ const groceryItems = [
 ];
 
 export default function App() {
+  const [items, setItems] = useState(groceryItems);
+
+  function handleAddItem(item) {
+    setItems([...items, item]);
+  }
+
+  function handleDeleteItem(id) {
+    setItems((item) => items.filter((item) => item.id !== id));
+  }
+
+  function handleToggleItem(id) {
+    setItems((items) =>
+      items.map((item) =>
+        item.id === id ? { ...item, checked: !item.checked } : item
+      )
+    );
+  }
+
   return (
     <div className="app">
       <Header />
-      <Form />
-      <GroceryList />
+      <Form onAddItem={handleAddItem} />
+      <GroceryList
+        items={items}
+        onDeleteItem={handleDeleteItem}
+        onToggleItem={handleToggleItem}
+      />
       <Footer />
     </div>
   );
@@ -36,7 +58,7 @@ function Header() {
   return <h1>Catatan Belanjaku 📝</h1>;
 }
 
-function Form() {
+function Form({ onAddItem }) {
   const [name, setName] = useState("");
   const [quantity, setQuantity] = useState(1);
 
@@ -46,8 +68,7 @@ function Form() {
     if (!name) return;
 
     const newItem = { name, quantity, checked: false, id: Date.now() };
-
-    console.log(newItem);
+    onAddItem(newItem);
   }
 
   const quantityNum = [...Array(20)].map((_, i) => (
@@ -75,13 +96,18 @@ function Form() {
   );
 }
 
-function GroceryList() {
+function GroceryList({ items, onDeleteItem, onToggleItem }) {
   return (
     <>
       <div className="list">
         <ul>
-          {groceryItems.map((item) => (
-            <Item item={item} key={item.id} />
+          {items.map((item) => (
+            <Item
+              item={item}
+              key={item.id}
+              onDeleteItem={onDeleteItem}
+              onToggleItem={onToggleItem}
+            />
           ))}
           ;
         </ul>
@@ -98,14 +124,14 @@ function GroceryList() {
   );
 }
 
-function Item({ item }) {
+function Item({ item, onDeleteItem, onToggleItem }) {
   return (
     <li key={item.id}>
-      <input type="checkbox" checked={true} />
+      <input type="checkbox" onChange={() => onToggleItem(item.id)} />
       <span style={item.checked ? { textDecoration: "line-through" } : {}}>
         {item.quantity} {item.name}
       </span>
-      <button>&times;</button>
+      <button onClick={() => onDeleteItem(item.id)}>&times;</button>
     </li>
   );
 }
