@@ -79,7 +79,7 @@ button {
   background-image: url(img/paper-bg.jpg);
   background-repeat: repeat-y;
   background-size: 105%;
-  /* background-attachment: local; */
+  background-attachment: local;
   color: #fefae0;
   padding: 2.3rem 0 0;
   display: flex;
@@ -101,7 +101,7 @@ button {
 
 .list li {
   color: #283618;
-  font-size: 200%;
+  font-size: 2rem;
   font-weight: bold;
   display: flex;
   align-items: center;
